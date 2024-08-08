@@ -17,6 +17,7 @@ def data():
     df = pd.DataFrame()
     df["id"] = np.arange(900)
     df["hh"] = [3, 1, 2, 0, 0, 2, 5, 4, 5] * 100
+    df["weights"] = np.ones(900)
     return df
 
 
@@ -30,6 +31,37 @@ def test_get_bootstrap_indices_radomization_works_with_clustering(data):
     rng = get_rng(seed=12345)
     res = get_bootstrap_indices(data, cluster_by="hh", n_draws=2, rng=rng)
     assert set(res[0]) != set(res[1])
+
+
+def test_get_bootstrap_indices_randomization_works_with_weights(data):
+    rng = get_rng(seed=12345)
+    res = get_bootstrap_indices(data, weight_by="weights", n_draws=2, rng=rng)
+    assert set(res[0]) != set(res[1])
+
+
+def test_get_bootstrap_indices_randomization_works_with_weights_and_clustering(data):
+    rng = get_rng(seed=12345)
+    res = get_bootstrap_indices(
+        data, weight_by="weights", cluster_by="hh", n_draws=2, rng=rng
+    )
+    assert set(res[0]) != set(res[1])
+
+
+def test_get_bootstrap_indices_randomization_works_with_and_without_weights(data):
+    rng1 = get_rng(seed=12345)
+    rng2 = get_rng(seed=12345)
+    res1 = get_bootstrap_indices(data, n_draws=1, rng=rng1)
+    res2 = get_bootstrap_indices(data, weight_by="weights", n_draws=1, rng=rng2)
+    assert not np.array_equal(res1, res2)
+
+
+def test_get_boostrap_indices_randomization_works_with_extreme_case(data):
+    rng = get_rng(seed=12345)
+    weights = np.zeros(900)
+    weights[0] = 1.0
+    data["weights"] = weights
+    res = get_bootstrap_indices(data, weight_by="weights", n_draws=1, rng=rng)
+    assert len(np.unique(res)) == 1
 
 
 def test_clustering_leaves_households_intact(data):

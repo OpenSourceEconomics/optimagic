@@ -24,6 +24,7 @@ def bootstrap(
     existing_result=None,
     outcome_kwargs=None,
     n_draws=1_000,
+    weight_by=None,
     cluster_by=None,
     seed=None,
     n_cores=1,
@@ -41,6 +42,7 @@ def bootstrap(
         n_draws (int): Number of bootstrap samples to draw.
             If len(existing_outcomes) >= n_draws, a random subset of existing_outcomes
             is used.
+        weight_by (str): Column name of variable with weights or None.
         cluster_by (str): Column name of variable to cluster by or None.
         seed (Union[None, int, numpy.random.Generator]): If seed is None or int the
             numpy.random.default_rng is used seeded with seed. If seed is already a
@@ -59,7 +61,7 @@ def bootstrap(
 
     """
     if callable(outcome):
-        check_inputs(data=data, cluster_by=cluster_by)
+        check_inputs(data=data, weight_by=weight_by, cluster_by=cluster_by)
 
         if outcome_kwargs is not None:
             outcome = functools.partial(outcome, **outcome_kwargs)
@@ -82,6 +84,7 @@ def bootstrap(
         new_outcomes = get_bootstrap_outcomes(
             data=data,
             outcome=outcome,
+            weight_by=weight_by,
             cluster_by=cluster_by,
             rng=rng,
             n_draws=n_draws - n_existing,

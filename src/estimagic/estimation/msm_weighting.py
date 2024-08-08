@@ -24,8 +24,8 @@ def get_moments_cov(
         moment_kwargs (dict): Additional keyword arguments for calculate_moments.
         bootstrap_kwargs (dict): Additional keyword arguments that govern the
             bootstrapping. Allowed arguments are "n_draws", "seed", "n_cores",
-            "batch_evaluator", "cluster_by" and "error_handling". For details see the
-            bootstrap function.
+            "batch_evaluator", "weight_by", "cluster_by" and "error_handling".
+            For details see the bootstrap function.
 
     Returns:
         pandas.DataFrame or numpy.ndarray: The covariance matrix of the moment
@@ -39,6 +39,7 @@ def get_moments_cov(
         "n_draws",
         "seed",
         "batch_evaluator",
+        "weight_by",
         "cluster_by",
         "error_handling",
         "existing_result",

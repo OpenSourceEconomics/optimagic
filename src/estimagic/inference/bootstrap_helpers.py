@@ -2,12 +2,18 @@ import pandas as pd
 
 
 def check_inputs(
-    data=None, cluster_by=None, ci_method="percentile", ci_level=0.95, skipdata=False
+    data=None,
+    weight_by=None,
+    cluster_by=None,
+    ci_method="percentile",
+    ci_level=0.95,
+    skipdata=False,
 ):
     """Check validity of inputs.
 
     Args:
         data (pd.DataFrame): Dataset.
+        weight_by (str): Column name of variable with weights.
         cluster_by (str): Column name of variable to cluster by.
         ci_method (str): Method of choice for computing confidence intervals.
             The default is "percentile".
@@ -21,6 +27,10 @@ def check_inputs(
     if not skipdata:
         if not isinstance(data, pd.DataFrame) and not isinstance(data, pd.Series):
             raise TypeError("Data must be a pandas.DataFrame or pandas.Series.")
+        elif (weight_by is not None) and (weight_by not in data.columns.tolist()):
+            raise ValueError(
+                "Input 'weight_by' must be None or a column name of 'data'."
+            )
         elif (cluster_by is not None) and (cluster_by not in data.columns.tolist()):
             raise ValueError(
                 "Input 'cluster_by' must be None or a column name of 'data'."

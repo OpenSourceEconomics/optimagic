@@ -88,6 +88,15 @@ def test_check_inputs_data():
     assert str(error.value) == expected_msg
 
 
+def test_check_inputs_weight_by(setup):
+    weights = "this is not a column name of df"
+    expected = "Input 'weight_by' must be None or a column name of 'data'."
+
+    with pytest.raises(ValueError) as error:
+        check_inputs(data=setup["df"], weight_by=weights)
+    assert str(error.value) == expected
+
+
 def test_check_inputs_cluster_by(setup):
     cluster_by = "this is not a column name of df"
     expected_msg = "Input 'cluster_by' must be None or a column name of 'data'."

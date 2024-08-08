@@ -6,6 +6,7 @@ from estimagic.inference.bootstrap_samples import get_bootstrap_indices
 def get_bootstrap_outcomes(
     data,
     outcome,
+    weight_by=None,
     cluster_by=None,
     rng=None,
     n_draws=1000,
@@ -19,6 +20,7 @@ def get_bootstrap_outcomes(
         data (pandas.DataFrame): original dataset.
         outcome (callable): function of the dataset calculating statistic of interest.
             Returns a general pytree (e.g. pandas Series, dict, numpy array, etc.).
+        weight_by (str): column name of the variable with weights.
         cluster_by (str): column name of the variable to cluster by.
         rng (numpy.random.Generator): A random number generator.
         n_draws (int): number of bootstrap draws.
@@ -34,12 +36,13 @@ def get_bootstrap_outcomes(
         estimates (list):  List of pytrees of estimated bootstrap outcomes.
 
     """
-    check_inputs(data=data, cluster_by=cluster_by)
+    check_inputs(data=data, weight_by=weight_by, cluster_by=cluster_by)
     batch_evaluator = process_batch_evaluator(batch_evaluator)
 
     indices = get_bootstrap_indices(
         data=data,
         rng=rng,
+        weight_by=weight_by,
         cluster_by=cluster_by,
         n_draws=n_draws,
     )
