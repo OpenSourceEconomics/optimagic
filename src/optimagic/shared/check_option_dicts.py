@@ -41,6 +41,6 @@ def check_optimization_options(options, usage, algorithm_mandatory=True):
         msg = (
             "The following are not valid entries of optimize_options because they are "
             "not only relevant for minimization but also for inference: "
-            "{invalid_general}"
+            f"{invalid_general}"
         )
         raise ValueError(msg)

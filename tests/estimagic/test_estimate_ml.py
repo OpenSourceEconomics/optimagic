@@ -18,6 +18,7 @@ from estimagic.examples.logit import (
     scalar_logit_fun_and_jac,
 )
 from optimagic import mark
+from optimagic.optimizers import scipy_optimizers
 from optimagic.parameters.bounds import Bounds
 
 
@@ -347,6 +348,34 @@ def test_estimate_ml_optimize_options_false(fitted_logit_model, logit_np_inputs)
 
     # compare covariance (if not robust case)
     aaae(got.cov(method="jacobian"), fitted_logit_model.covjac, decimal=4)
+
+
+def test_estimate_ml_algorithm_type(logit_np_inputs):
+    """Test that estimate_ml computes correct covariances given correct params."""
+    kwargs = {"y": logit_np_inputs["y"], "x": logit_np_inputs["x"]}
+
+    params = pd.DataFrame({"value": logit_np_inputs["params"]})
+
+    estimate_ml(
+        loglike=logit_loglike,
+        params=params,
+        loglike_kwargs=kwargs,
+        optimize_options=scipy_optimizers.ScipyLBFGSB,
+    )
+
+
+def test_estimate_ml_algorithm(logit_np_inputs):
+    """Test that estimate_ml computes correct covariances given correct params."""
+    kwargs = {"y": logit_np_inputs["y"], "x": logit_np_inputs["x"]}
+
+    params = pd.DataFrame({"value": logit_np_inputs["params"]})
+
+    estimate_ml(
+        loglike=logit_loglike,
+        params=params,
+        loglike_kwargs=kwargs,
+        optimize_options=scipy_optimizers.ScipyLBFGSB(stopping_maxfun=10),
+    )
 
 
 # ======================================================================================

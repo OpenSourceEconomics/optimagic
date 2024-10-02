@@ -95,8 +95,8 @@ def estimate_ml(
             optimize_options to False. Pytrees can be a numpy array, a pandas Series, a
             DataFrame with "value" column, a float and any kind of (nested) dictionary
             or list containing these elements. See :ref:`params` for examples.
-        optimize_options (dict, str or False): Keyword arguments that govern the
-            numerical optimization. Valid entries are all arguments of
+        optimize_options (dict, Algorithm, str or False): Keyword arguments that govern
+            the numerical optimization. Valid entries are all arguments of
             :func:`~estimagic.optimization.optimize.minimize` except for those that are
             passed explicilty to ``estimate_ml``. If you pass False as optimize_options
             you signal that ``params`` are already the optimal parameters and no
@@ -199,7 +199,10 @@ def estimate_ml(
     is_optimized = optimize_options is False
 
     if not is_optimized:
-        if isinstance(optimize_options, str):
+        # If optimize_options is not a dictionary and not False, we assume it represents
+        # an algorithm. The actual testing of whether it is a valid algorithm is done
+        # when `maximize` is called.
+        if not isinstance(optimize_options, dict):
             optimize_options = {"algorithm": optimize_options}
 
         check_optimization_options(
