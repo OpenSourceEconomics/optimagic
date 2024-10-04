@@ -60,6 +60,7 @@ jobs:
       - name: create build environment
         uses: mamba-org/setup-micromamba@v1
         with:
+          micromamba-version: 1.5.6-0
           environment-file: ./.tools/envs/testenv-others.yml
           cache-environment: true
           create-args: |

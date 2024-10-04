@@ -5,6 +5,7 @@ import plotly.express as px
 from packaging import version
 
 DOCS_DIR = Path(__file__).parent.parent / "docs"
+OPTIMAGIC_ROOT = Path(__file__).parent
 
 PLOTLY_TEMPLATE = "simple_white"
 PLOTLY_PALETTE = px.colors.qualitative.Set2

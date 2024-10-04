@@ -53,7 +53,7 @@ The unconstrained optimum of a six-dimensional version of this problem is:
     ...    algorithm="scipy_lbfgsb",
     ... )
     >>> res.params.round(3)
-    array([1. , 0.8, 0.6, 0.4, 0.2, 0. ])
+    array([ 1. ,  0.8,  0.6,  0.4,  0.2, -0. ])
 
 ```
 

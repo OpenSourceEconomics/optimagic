@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from optimagic import constraints, mark, utilities
+from optimagic.algorithms import algos
 from optimagic.benchmarking.benchmark_reports import (
     convergence_report,
     rank_report,
@@ -100,4 +101,5 @@ __all__ = [
     "EqualityConstraint",
     "History",
     "__version__",
+    "algos",
 ]
