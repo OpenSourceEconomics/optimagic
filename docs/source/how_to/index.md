@@ -23,4 +23,5 @@ how_to_logging
 how_to_errors_during_optimization
 how_to_slice_plot
 how_to_benchmarking
+how_to_algorithm_selection_
 ```

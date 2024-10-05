@@ -35,4 +35,5 @@ dependencies:
       - types-openpyxl  # dev, tests
       - types-jinja2  # dev, tests
       - sqlalchemy-stubs  # dev, tests
+      - sphinxcontrib-mermaid  # dev, tests, docs
       - -e ../../

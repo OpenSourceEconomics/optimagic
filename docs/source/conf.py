@@ -48,6 +48,7 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinx_panels",
     "sphinx_design",
+    "sphinxcontrib.mermaid",
 ]
 
 myst_enable_extensions = [
@@ -55,6 +56,9 @@ myst_enable_extensions = [
     "dollarmath",
     "html_image",
 ]
+myst_fence_as_directive = ["mermaid"]
+
+
 copybutton_prompt_text = ">>> "
 copybutton_only_copy_prompt_lines = False
 
